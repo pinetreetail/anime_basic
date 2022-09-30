@@ -2,9 +2,28 @@
 #include <cassert>
 #include "SceneMain.h"
 
+
+namespace
+{
+	// 
+	const char* const kPlayerGraphicFilename = "data/char.png";
+	
+	// 
+	constexpr int kPlayerGraphicDivX = 3;
+	constexpr int kPlayerGraphicDivY = 4;
+	constexpr int kPlayerGraphicDivNum = kPlayerGraphicDivX * kPlayerGraphicDivY;
+
+	// 
+	constexpr int kPlayerGraphicSizeX = 32;
+	constexpr int kPlayerGraphicSizeY = 32;
+}
+
 SceneMain::SceneMain()
 {
-	m_hPlayerGraphic = -1;
+	for (auto& handle : m_hPlayerGraphic)
+	{
+		handle = -1;
+	}
 }
 SceneMain::~SceneMain()
 {
@@ -14,15 +33,21 @@ SceneMain::~SceneMain()
 // èâä˙âª
 void SceneMain::init()
 {
-	m_hPlayerGraphic = LoadGraph("data/char.png");
-	m_player.setHandle(m_hPlayerGraphic);
+	LoadDivGraph(kPlayerGraphicFilename, kPlayerGraphicDivNum,
+		kPlayerGraphicDivX, kPlayerGraphicDivY,
+		kPlayerGraphicSizeX, kPlayerGraphicSizeY, m_hPlayerGraphic);
+
+	m_player.setHandle(m_hPlayerGraphic[4]);
 	m_player.init();
 }
 
 // èIóπèàóù
 void SceneMain::end()
 {
-	DeleteGraph(m_hPlayerGraphic);
+	for (auto& handle : m_hPlayerGraphic)
+	{
+		DeleteGraph(handle);
+	}
 }
 
 // ñàÉtÉåÅ[ÉÄÇÃèàóù
