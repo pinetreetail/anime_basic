@@ -7,15 +7,6 @@ namespace
 {
 	// 
 	const char* const kPlayerGraphicFilename = "data/char.png";
-	
-	// 
-	constexpr int kPlayerGraphicDivX = 3;
-	constexpr int kPlayerGraphicDivY = 4;
-	constexpr int kPlayerGraphicDivNum = kPlayerGraphicDivX * kPlayerGraphicDivY;
-
-	// 
-	constexpr int kPlayerGraphicSizeX = 32;
-	constexpr int kPlayerGraphicSizeY = 32;
 }
 
 SceneMain::SceneMain()
@@ -33,11 +24,13 @@ SceneMain::~SceneMain()
 // èâä˙âª
 void SceneMain::init()
 {
-	LoadDivGraph(kPlayerGraphicFilename, kPlayerGraphicDivNum,
-		kPlayerGraphicDivX, kPlayerGraphicDivY,
-		kPlayerGraphicSizeX, kPlayerGraphicSizeY, m_hPlayerGraphic);
-
-	m_player.setHandle(m_hPlayerGraphic[4]);
+	LoadDivGraph(kPlayerGraphicFilename, Player::kGraphicDivNum,
+		Player::kGraphicDivX, Player::kGraphicDivY,
+		Player::kGraphicSizeX, Player::kGraphicSizeY, m_hPlayerGraphic);
+	for (int i = 0; i < Player::kGraphicDivNum; i++)
+	{
+		m_player.setHandle(i, m_hPlayerGraphic[i]);
+	}
 	m_player.init();
 }
 
